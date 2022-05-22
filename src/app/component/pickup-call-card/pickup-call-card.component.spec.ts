@@ -1,26 +1,24 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
-import { LoaderPage } from './loader.page';
+import { PickupCallCardComponent } from './pickup-call-card.component';
 
-describe('LoaderPage', () => {
-  let component: LoaderPage;
-  let fixture: ComponentFixture<LoaderPage>;
-  let router: Router;
+describe('PickupCallCardComponent', () => {
+  let component: PickupCallCardComponent;
+  let fixture: ComponentFixture<PickupCallCardComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoaderPage ],
+      declarations: [ PickupCallCardComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LoaderPage);
+    fixture = TestBed.createComponent(PickupCallCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
 
-  it('should navigate to the login', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

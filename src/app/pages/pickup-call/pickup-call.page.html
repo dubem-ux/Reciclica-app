@@ -1,9 +1,30 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>pickup-call</ion-title>
+  <ion-toolbar color="success">
+    <ion-title>pickup call</ion-title>
+    <ion-button slot="start" fill="clear">
+      <ion-back-button text="" color="light" ></ion-back-button>
+    </ion-button>
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
+  <img src="./assets/img/map.png">
+  <ion-card>
+    <ion-card-content>
+      <p>fake street</p>
+      <p>complement: appolo</p>
+      <p>country</p>
+      <p>Zip Code</p>
+      <p>City name</p>
+    </ion-card-content>
 
+  </ion-card>
+  <ion-list>
+    <ion-item lines="insert">
+      <ion-label position="floating">Notes</ion-label>
+      <ion-textarea></ion-textarea>
+    </ion-item>
+  </ion-list>
+  <ion-button size="full" color="success">Create pickup call</ion-button>
 </ion-content>
