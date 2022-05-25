@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginPageRoutingModule } from './login-routing.module';
-
 import { LoginPage } from './login.page';
+import { PickupCallCardModule } from 'src/app/component/pickup-call-card/PickupCallCardModule';
 
 @NgModule({
   imports: [
@@ -13,7 +13,8 @@ import { LoginPage } from './login.page';
     FormsModule,
     IonicModule,
     LoginPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PickupCallCardModule
   ],
   declarations: [LoginPage]
 })

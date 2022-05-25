@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AbstractControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-error-message',
@@ -7,8 +8,18 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ErrorMessageComponent implements OnInit {
 @Input() message: string;
+@Input() field: AbstractControl;
+
   constructor() { }
 
   ngOnInit() {}
+
+  shouldShowFunction(){
+   //form.get('email').touched && form.get('email').errors?.required"
+   if(this.field.touched && this.field.errors?.required){
+     return true;
+   }
+   return false;
+  };
 
 }
