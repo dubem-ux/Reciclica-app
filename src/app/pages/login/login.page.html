@@ -23,8 +23,8 @@
           </ion-item>
           <app-error-message [field]= "form.get('password')" eror="required" message=" password is mandatory"></app-error-message>
           <!-- <ion-label color="danger" *ngIf= "form.get('password').touched && form.get('password').errors?.required"> password is mandatory</ion-label> -->
-          <ion-button color="dark" fill="clear" size="full" [disabled]= "!form.get('email').valid">forgotton email/password</ion-button>
-          <ion-button [disabled]= "!form.valid" (click) = "login()" color="success" size="full">Login</ion-button>
+          <ion-button (click)= "forgotEmailPassword()" color="dark" fill="clear" size="full" [disabled]= "!form.get('email').valid">forgotton email/password</ion-button>
+          <ion-button  [disabled]= "!form.valid" id="loginButton" (click) = "login()"  color="success" size="full">Login</ion-button>
           <ion-button (click) = "register()" color="success" fill="clear" size="full">Register</ion-button>
         </ion-card-content>
       </ion-card>

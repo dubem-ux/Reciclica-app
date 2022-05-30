@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { appStoreModule } from 'src/store/appStoreModule';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { PickupCallCardModule } from './component/pickup-call-card/PickupCallCardModule';
+import {AngularFireModule} from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +17,7 @@ import { PickupCallCardModule } from './component/pickup-call-card/PickupCallCar
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     PickupCallCardModule,
     ...appStoreModule,
     StoreDevtoolsModule.instrument({maxAge: 25})],
