@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/services/auth/auth.service';
+// import { AuthService } from 'src/app/services/auth/auth.service';
 import { IAppState } from 'src/store/loading/appState';
 import { hide, show } from 'src/store/loading/loading.actions';
 import { login, loginFail, loginSuccess, recoverPassword,
@@ -27,16 +27,17 @@ export class LoginPage implements OnInit,OnDestroy {
 
   constructor(private router: Router, private formBuilder: FormBuilder,
     private store: Store<IAppState>, private toastController: ToastController,
-    private auth: AuthService) { }
+    ) { }
+    // private auth: AuthService...... was inside the constructir
 
   ngOnInit() {
     this.form = new LoginPageForm(this.formBuilder).createForm();
     this.loginStateSubscription= this.store.select('login').subscribe( loginState=>{
       this.onIsRecoveredPassword(loginState);
-      this.onIsRecoveringPassword(loginState);
+      // this.onIsRecoveringPassword(loginState);
       this.onIsLoggedIn(loginState);
       this.onError(loginState);
-      this.onIsLoggingIn(loginState);
+      // this.onIsLoggingIn(loginState);
       this.toggleLoading(loginState);
     });
   };
@@ -46,17 +47,17 @@ export class LoginPage implements OnInit,OnDestroy {
     }
   }
 
-  private onIsLoggingIn(loginState: IloginState){
-    if(loginState.isLoggingIn){
-      const email = this.form.get('email').value;
-      const password = this.form.get('password').value;
-      this.auth.login(email,password).subscribe(user =>{
-        this.store.dispatch(loginSuccess({user}));
-      }, error =>{
-        this.store.dispatch(loginFail({error}));
-      });
-    }
-  }
+  // private onIsLoggingIn(loginState: IloginState){
+  //   if(loginState.isLoggingIn){
+  //     const email = this.form.get('email').value;
+  //     const password = this.form.get('password').value;
+  //     this.auth.login(email,password).subscribe(user =>{
+  //       this.store.dispatch(loginSuccess({user}));
+  //     }, error =>{
+  //       this.store.dispatch(loginFail({error}));
+  //     });
+  //   }
+  // }
 
   private toggleLoading(loginState: IloginState){
     if(loginState.isLoggingIn || loginState.isRecoveringPassword){
@@ -84,14 +85,14 @@ export class LoginPage implements OnInit,OnDestroy {
     }
   }
 
-  private onIsRecoveringPassword(loginState: IloginState){
-    if(loginState.isRecoveringPassword){
-      // this.store.dispatch(show());
-      this.auth.recoverEmailPassword(this.form.get('email').value).subscribe(()=>{
-        this.store.dispatch(recoverPasswordSuccess());
-      }, error => {this.store.dispatch(recoverPasswordFail({error}));});
-    }
-  };
+  // private onIsRecoveringPassword(loginState: IloginState){
+  //   if(loginState.isRecoveringPassword){
+  //     // this.store.dispatch(show());
+  //     this.auth.recoverEmailPassword(this.form.get('email').value).subscribe(()=>{
+  //       this.store.dispatch(recoverPasswordSuccess());
+  //     }, error => {this.store.dispatch(recoverPasswordFail({error}));});
+  //   }
+  // };
   private async onIsRecoveredPassword(loginState: IloginState){
     if (loginState.isRecoveredPassword){
       // this.store.dispatch(hide());
@@ -105,7 +106,7 @@ export class LoginPage implements OnInit,OnDestroy {
   };
 
   forgotEmailPassword(){
-    this.store.dispatch(recoverPassword());
+    this.store.dispatch(recoverPassword({email: this.form.get('email').value}));
     // this.store.dispatch(show());
     // setTimeout(()=>{
     //   this.store.dispatch(hide());
@@ -115,7 +116,7 @@ export class LoginPage implements OnInit,OnDestroy {
 
 
   login(): void{
-    this.store.dispatch(login());
+    this.store.dispatch(login({email: this.form.get('email').value, password: this.form.get('password').value}));
   };
   register(): void{
     this.router.navigate(['./register']);
