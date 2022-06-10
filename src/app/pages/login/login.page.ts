@@ -11,8 +11,7 @@ import { Subscription } from 'rxjs';
 // import { AuthService } from 'src/app/services/auth/auth.service';
 import { IAppState } from 'src/store/loading/appState';
 import { hide, show } from 'src/store/loading/loading.actions';
-import { login, loginFail, loginSuccess, recoverPassword,
-  recoverPasswordFail, recoverPasswordSuccess } from 'src/store/login/login.actions';
+import { login, recoverPassword} from 'src/store/login/login.actions';
 import { IloginState } from 'src/store/login/loginState';
 import { LoginPageForm } from './login.page.form';
 

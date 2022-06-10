@@ -9,6 +9,7 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 export class ErrorMessageComponent implements OnInit {
 @Input() message: string;
 @Input() field: AbstractControl;
+@Input() error: string;
 
   constructor() { }
 
@@ -16,7 +17,7 @@ export class ErrorMessageComponent implements OnInit {
 
   shouldShowFunction(){
    //form.get('email').touched && form.get('email').errors?.required"
-   if(this.field.touched && this.field.errors?.required){
+   if(this.field.touched && this.field.errors?.[this.error]){
      return true;
    }
    return false;
