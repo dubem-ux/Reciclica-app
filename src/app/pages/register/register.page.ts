@@ -1,11 +1,14 @@
+/* eslint-disable @angular-eslint/use-lifecycle-interface */
 /* eslint-disable arrow-body-style */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { IAppState } from 'src/store/loading/appState';
 import { hide, show } from 'src/store/loading/loading.actions';
+import { login } from 'src/store/login/login.actions';
 import { register } from 'src/store/register/register.actions';
 import { RegisterState } from 'src/store/register/registerState';
 import { RegisterPageForm } from './form/register.form';
@@ -15,17 +18,24 @@ import { RegisterPageForm } from './form/register.form';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
-export class RegisterPage implements OnInit {
+export class RegisterPage implements OnInit, OnDestroy {
 
   registerForm: RegisterPageForm;
+  registerPageSubscription: Subscription;
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private store: Store<IAppState>,
-    private toastController: ToastController) { }
+  constructor( private formBuilder: FormBuilder, private store: Store<IAppState>,
+    private toastController: ToastController) {
+      // private router: Router,
+     }
 
   ngOnInit() {
     this.createForm();
 
     this.watchRegisterState();
+  }
+
+  ngOnDestroy() {
+    this.registerPageSubscription.unsubscribe();
   }
 
   register(): void{
@@ -42,20 +52,30 @@ export class RegisterPage implements OnInit {
   }
 
   private watchRegisterState() {
-    this.store.select('register').subscribe(state =>{
+    this.registerPageSubscription = this.store.select('register').subscribe(state =>{
      this.toggleLoading(state);
-     if(state.isRegistered){
-       this.router.navigate(['home']);
-     }
-     if(state.error){
-       this.toastController.create({
-         message: state.error.message,
-         duration:3000,
-         header: 'registration not done'
-       }).then(toast => toast.present());
-     }
+     this.onRegistered(state);
+     this.onError(state);
     });
   };
+  private onRegistered(state: RegisterState){
+    if(state.isRegistered){
+      //  this.router.navigate(['home']);
+      this.store.dispatch(login({
+        email: this.registerForm.getForm().value.email,
+        password: this.registerForm.getForm().value.password
+      }));
+     }
+  }
+  private onError(state: RegisterState){
+    if(state.error){
+      this.toastController.create({
+        message: state.error.message,
+        duration:3000,
+        header: 'registration not done'
+      }).then(toast => toast.present());
+    }
+  }
 
   private toggleLoading(state: RegisterState){
     if(state.isRegistering){
